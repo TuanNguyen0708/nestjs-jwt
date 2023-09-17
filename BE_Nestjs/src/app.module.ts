@@ -2,8 +2,10 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserEntity } from './user/user.entity';
-import { JwtModule } from '@nestjs/jwt';
+import { UserModule } from './user/user.module';
+import { RoleModule } from './role/role.module';
+import { UserEntity } from "./user/user.entity";
+import { RoleEntity } from "./role/role.entity";
 
 @Module({
   imports: [
@@ -14,14 +16,11 @@ import { JwtModule } from '@nestjs/jwt';
       username: 'root',
       password: '',
       database: 'nest-jwt',
-      entities: [UserEntity],
+      entities: [__dirname + './**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([UserEntity]),
-    JwtModule.register({
-      secret: 'secret',
-      signOptions: { expiresIn: '1d' },
-    }),
+    UserModule,
+    RoleModule,
   ],
   controllers: [AppController],
   providers: [AppService],

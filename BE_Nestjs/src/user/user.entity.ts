@@ -1,16 +1,27 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { RoleEntity } from '../role/role.entity';
 
 @Entity('users')
 export class UserEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @Column()
+  @Column({type: 'varchar', length: 10, nullable: true})
   name: string;
 
-  @Column({ unique: true })
+  @Column({type: 'varchar', length: 10, nullable: false, unique: true})
   email: string;
 
-  @Column()
+  @Column({type: 'varchar', nullable: false})
   password: string;
+
+  @ManyToMany(() => RoleEntity, (role) => role.users, {eager: true})
+  @JoinTable({
+    name: 'user_role',
+    joinColumn: {
+      name: 'user_id',
+    },
+    inverseJoinColumn: { name: 'role_id' },
+  })
+  roles: RoleEntity[];
 }
