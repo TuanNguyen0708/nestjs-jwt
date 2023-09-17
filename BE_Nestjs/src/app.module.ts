@@ -4,8 +4,8 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { RoleModule } from './role/role.module';
-import { UserEntity } from "./user/user.entity";
-import { RoleEntity } from "./role/role.entity";
+import { RoleEntity } from "./entities/role.entity";
+import { UserEntity } from "./entities/user.entity";
 
 @Module({
   imports: [
@@ -16,7 +16,7 @@ import { RoleEntity } from "./role/role.entity";
       username: 'root',
       password: '',
       database: 'nest-jwt',
-      entities: [__dirname + './**/*.entity{.ts,.js}'],
+      entities: [UserEntity, RoleEntity],
       synchronize: true,
     }),
     UserModule,
