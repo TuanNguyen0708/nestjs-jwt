@@ -1,6 +1,6 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { UserEntity } from './user.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { RoleEnum } from "../role/role.enum";
+import { UserEntity } from "./user.entity";
 
 @Entity('roles')
 export class RoleEntity {
@@ -8,8 +8,8 @@ export class RoleEntity {
   id: number;
 
   @Column({type: 'varchar', length: 10, nullable: false, unique: true})
-  role: RoleEnum;
+  roleName: RoleEnum;
 
-  @ManyToMany(() => UserEntity, (user) => user.roles)
+  @OneToMany(() => UserEntity, user => user.role)
   users: UserEntity[];
 }

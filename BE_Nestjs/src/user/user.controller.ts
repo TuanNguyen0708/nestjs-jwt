@@ -32,6 +32,7 @@ export class UserController {
       name,
       email,
       password: hashedPassword,
+      roleName: "user"
     });
 
     delete user.password;

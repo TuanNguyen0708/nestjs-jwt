@@ -25,7 +25,7 @@ export class RoleService {
 
   async create(dto: RoleDTO): Promise<any> {
     const exists = await this.roleRepository.findOne({
-      where: { role: dto.role },
+      where: { roleName: dto.roleName },
     });
     if (exists) {
       throw new BadRequestException({ message: 'Role does not exist' });
