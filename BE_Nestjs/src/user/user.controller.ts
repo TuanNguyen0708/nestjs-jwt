@@ -60,9 +60,7 @@ export class UserController {
 
     response.cookie('jwt', jwt, { httpOnly: true });
 
-    return {
-      message: 'Success',
-    };
+    return JSON.stringify(jwt)
   }
 
   @Get('user')
