@@ -3,7 +3,7 @@ import { AccountService } from '../account/account.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'jhi-register',
+  selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })

@@ -7,6 +7,7 @@ import { TOKEN_KEY } from '../constains/constains';
 @Injectable({ providedIn: 'root' })
 export class AccountService {
   apiUrl = this.applicationService.API_URL + 'api/login';
+  apiLogout = this.applicationService.API_URL + 'api/logout';
   constructor(
     private http: HttpClient,
     private applicationService: ApplicationConfigService,
@@ -23,6 +24,10 @@ export class AccountService {
         return throwError(error);
       }),
     );
+  }
+
+  logOut(): Observable<any> {
+    return this.http.post(this.apiLogout, {})
   }
 
   isLoggedIn(): boolean {

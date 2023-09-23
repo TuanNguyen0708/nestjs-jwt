@@ -4,7 +4,7 @@ import { firstValueFrom } from "rxjs";
 import { Router } from "@angular/router";
 
 @Component({
-  selector: 'jhi-login',
+  selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { AccountService } from './account/account.service';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,10 +8,18 @@ import { AccountService } from './account/account.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  isAuth: boolean = false;
   constructor(
-    private accountService: AccountService,
+    public accountService: AccountService,
     private router: Router,
   ) {}
 
-  async ngOnInit() {}
+  ngOnInit() {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        console.log('1');
+        this.isAuth = this.accountService.isLoggedIn();
+      }
+    });
+  }
 }
