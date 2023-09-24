@@ -6,6 +6,7 @@ import { UserModule } from './user/user.module';
 import { RoleModule } from './role/role.module';
 import { RoleEntity } from "./entities/role.entity";
 import { UserEntity } from "./entities/user.entity";
+import { JwtModule } from "@nestjs/jwt";
 
 @Module({
   imports: [
@@ -18,6 +19,10 @@ import { UserEntity } from "./entities/user.entity";
       database: 'nest-jwt',
       entities: [UserEntity, RoleEntity],
       synchronize: true,
+    }),
+    JwtModule.register({
+      secret: 'secret',
+      signOptions: { expiresIn: '1d' },
     }),
     UserModule,
     RoleModule,

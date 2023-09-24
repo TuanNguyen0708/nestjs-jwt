@@ -32,7 +32,7 @@ export class UserController {
       name,
       email,
       password: hashedPassword,
-      roleName: "user"
+      roleName: 'user',
     });
 
     delete user.password;
@@ -56,11 +56,14 @@ export class UserController {
       throw new BadRequestException('Email does not exist');
     }
 
-    const jwt = await this.jwtService.signAsync({ id: user.id });
+    const jwt = await this.jwtService.signAsync(
+      { id: user.id },
+      { secret: 'secret' },
+    );
 
-    response.cookie('jwt', jwt, { httpOnly: true });
+    response.cookie('jwt', jwt, { httpOnly: false });
 
-    return JSON.stringify(jwt)
+    return JSON.stringify(jwt);
   }
 
   @Get('user')

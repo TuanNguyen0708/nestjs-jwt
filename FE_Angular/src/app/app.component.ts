@@ -17,7 +17,6 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        console.log('1');
         this.isAuth = this.accountService.isLoggedIn();
       }
     });
