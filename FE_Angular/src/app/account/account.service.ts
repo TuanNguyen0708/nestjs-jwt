@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { ApplicationConfigService } from '../../config/application-config.service';
-import { catchError, map, Observable, throwError } from 'rxjs';
-import { TOKEN_KEY } from '../constains/constains';
+import { Observable } from 'rxjs';
+import { JwtService } from '../jwt-service/jwt.service';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
@@ -11,26 +11,18 @@ export class AccountService {
   constructor(
     private http: HttpClient,
     private applicationService: ApplicationConfigService,
+    private jwtService: JwtService,
   ) {}
 
   login(identity: { email: string; password: string }): Observable<any> {
-    return this.http.post<any>(this.apiLogin, identity).pipe(
-      map(response => {
-        localStorage.setItem(TOKEN_KEY, response);
-        return response;
-      }),
-      catchError((error: HttpErrorResponse) => {
-        console.error('Error:', error);
-        return throwError(error);
-      }),
-    );
+    return this.http.post<any>(this.apiLogin, identity, { withCredentials: true });
   }
 
   logOut(): Observable<any> {
-    return this.http.post(this.apiLogout, {});
+    return this.http.post(this.apiLogout, {}, { withCredentials: true });
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem(TOKEN_KEY);
+    return this.jwtService.isTokenValid();
   }
 }

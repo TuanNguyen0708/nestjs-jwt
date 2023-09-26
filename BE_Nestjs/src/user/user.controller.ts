@@ -63,7 +63,18 @@ export class UserController {
 
     response.cookie('jwt', jwt, { httpOnly: false });
 
-    return JSON.stringify(jwt);
+    return {
+      message: 'Login Successfully',
+    };
+  }
+
+  @Post('logout')
+  async logout(@Res({ passthrough: true }) response: Response) {
+    response.clearCookie('jwt');
+
+    return {
+      message: 'Logout Successfully',
+    };
   }
 
   @Get('user')
@@ -85,14 +96,5 @@ export class UserController {
     } catch (e) {
       throw new UnauthorizedException();
     }
-  }
-
-  @Post('logout')
-  async logout(@Res({ passthrough: true }) response: Response) {
-    response.clearCookie('jwt');
-
-    return {
-      message: 'success',
-    };
   }
 }
